@@ -79,7 +79,7 @@ $currentCommand = 1
 Write-Host "$redColor"
 echo "            _     __        _           "
 echo " ___ ___ __(_)___/ /___  __(_)__ _    __"
-echo "/ _ `/ // / / __/  '_/ |/ / / -_) |/|/ /"
+echo "/ _ '/ // / / __/  '_/ |/ / / -_) |/|/ /"
 echo "\_  /\___/_/\__/_/\_\|___/_/\__/|__v__/ "
 echo " /_/                                    "
 Write-Host $resetColor
