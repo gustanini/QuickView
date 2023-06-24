@@ -58,10 +58,12 @@ if ($helpFlag) {
 $commands = @(
     @{ Command = "Get-NetDomain"; CommandName = "Get-NetDomain" },
     @{ Command = "Get-NetUser -UACFilter NOT_ACCOUNTDISABLE | Select-Object samaccountname, description"; CommandName = "Get-NetUser" },
-    @{ Command = "Get-DomainUser -SPN | Select-Object name, description, objectsid, serviceprincipalname"; CommandName = "Get-DomainUser -SPN"},
     @{ Command = "Get-NetGroup | Select-Object samaccountname, admincount"; CommandName = "Get-NetGroup" },
     @{ Command = "net accounts"; CommandName = "net accounts" },
     @{ Command = "Get-NetComputer | Select-Object operatingsystem, dnshostname"; CommandName = "Get-NetComputer" }
+    @{ Command = "Get-NetLoggedon | select username"; CommandName = "Get-NetLoggedon (local)" }
+    @{ Command = "Get-NetSession"; CommandName = "Get-NetSession (local active sessions)" }
+    @{ Command = "Get-DomainUser -SPN | Select-Object name, description, objectsid, serviceprincipalname"; CommandName = "Get-DomainUser -SPN"},
 )
 
 # Add optional commands if -Thorough flag is provided
