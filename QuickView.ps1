@@ -4,11 +4,14 @@
 # Set the file path to save the output
 $outputFilePath = ".\output.txt"
 
-# ANSI escape sequence for red color
-$redColor = [char]27 + "[31m"
-
 # ANSI escape sequence for green color
 $greenColor = [char]27 + "[32m"
+
+# ANSI escape sequence for yellow color
+$yellowColor = [char]27 + "[33m"
+
+# ANSI escape sequence for red color
+$redColor = [char]27 + "[31m"
 
 # ANSI escape sequence to reset color
 $resetColor = [char]27 + "[0m"
@@ -28,11 +31,9 @@ function Show-ProgressBar($current, $total) {
     $remainingWidth = $progressBarWidth - $completedWidth
 
     $progressBar = "[" + "#" * $completedWidth + " " * $remainingWidth + "]"
-    Write-Host "`rProgress: $progressBar" -NoNewline
+    $formattedProgressBar = "$yellowColor$progressBar$resetColor"
+    Write-Host "`rProgress: $formattedProgressBar" -NoNewline
 }
-
-# Insert your ASCII art title here
-echo ""
 
 # Check if the -Thorough flag is provided
 $thoroughFlag = $false
@@ -76,13 +77,13 @@ if ($thoroughFlag) {
 $totalCommands = $commands.Count
 $currentCommand = 1
 
-Write-Host "$redColor"
+$redColor
 echo "            _     __        _           "
 echo " ___ ___ __(_)___/ /___  __(_)__ _    __"
 echo "/ _ '/ // / / __/  '_/ |/ / / -_) |/|/ /"
 echo "\_  /\___/_/\__/_/\_\|___/_/\__/|__v__/ "
 echo " /_/                                    "
-Write-Host $resetColor
+$resetcolor
 
 Write-Host "Executing commands..."
 
