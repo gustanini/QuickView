@@ -10,6 +10,26 @@ QuickView is an automated enumeration tool inspired by winPEAS. It provides a fa
 - Color-coded output for easy readability.
 - Saves output to a file for future reference.
 
+### Commands Executed
+
+- Get-NetDomain - Displays an overview of current Domain information.
+- Get-NetUser - Filtered display of available users within the Domain.
+- Get-NetGroup - Filtered display of available groups within the Domain.
+- Invoke-EnumerateLocalAdmin - Displays which users are local administrators and in which computers.
+- Net Accounts - Account policy information (password information).
+- Get-NetComputer - Displays domain joined machines.
+- Get-NetGPO - Displays Group Policy Objects.
+- Get-NetComputer | Get-NetLoggedon - Displays users with cached credentials (locally and remotely if user is privileged enough).
+- Get-NetComputer | Get-NetSession - Displays users with active sessions (locally and remotely if user is privileged enough).
+
+Extra commands (use -thorough flag), these commands may or may not work, and they will usually impact execution time considerably:
+
+- Invoke-UserHunter - finds machines on the local domain where specified users are logged into, and checks if the current user has local admin access to found machines.
+- Find-LocalAdminAccess - finds machines on the domain that the current user has local admin access to
+- Find-DomainShare - Searches for computer shares on the domain.
+
+For more information visit the official [powersploit documentation](https://powersploit.readthedocs.io/en/stable/Recon/README/), [powersploit recon documentation 2](https://powersploit.readthedocs.io/en/latest/Recon/Find-DomainShare/).
+
 ## Prerequisites
 
 - Windows operating system

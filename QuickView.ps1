@@ -29,18 +29,15 @@ function Show-ProgressBar($current, $total) {
     $progressBarWidth = 40
     $completedWidth = $current / $total * $progressBarWidth
     $remainingWidth = $progressBarWidth - $completedWidth
-
     $progressBar = "[" + "#" * $completedWidth + " " * $remainingWidth + "]"
     $formattedProgressBar = "$yellowColor$progressBar$resetColor"
     Write-Host "`rProgress: $formattedProgressBar" -NoNewline
 }
-
 # Check if the -Thorough flag is provided
 $thoroughFlag = $false
 if ($args -contains "-Thorough") {
     $thoroughFlag = $true
 }
-
 # Check if the -h or --help flag is provided
 $helpFlag = $args -contains "-h" -or $args -contains "--help"
 
@@ -53,19 +50,20 @@ if ($helpFlag) {
     Write-Host "  -h, --help    Display this help message."
     exit
 }
-
 # Array of commands to execute
 $commands = @(
     @{ Command = "Get-NetDomain"; CommandName = "Get-NetDomain" },
     @{ Command = "Get-NetUser -UACFilter NOT_ACCOUNTDISABLE | Select-Object samaccountname, description"; CommandName = "Get-NetUser" },
     @{ Command = "Get-NetGroup | Select-Object samaccountname, admincount"; CommandName = "Get-NetGroup" },
-    @{ Command = "net accounts"; CommandName = "net accounts" },
-    @{ Command = "Get-NetComputer | Select-Object operatingsystem, dnshostname"; CommandName = "Get-NetComputer" }
-    @{ Command = "Get-NetLoggedon | select username"; CommandName = "Get-NetLoggedon (local)" }
-    @{ Command = "Get-NetSession"; CommandName = "Get-NetSession (local active sessions)" }
-    @{ Command = "Get-DomainUser -SPN | Select-Object name, description, objectsid, serviceprincipalname"; CommandName = "Get-DomainUser -SPN"},
+    @{ Command = "Invoke-EnumerateLocalAdmin"; CommandName = "Invoke-EnumerateLocalAdmin" },
+    @{ Command = "Net Accounts"; CommandName = "Net Accounts" },
+    @{ Command = "Get-NetComputer | Select-Object operatingsystem, dnshostname"; CommandName = "Get-NetComputer" },
+    @{ Command = "Get-NetGPO"; CommandName = "Get-NetGPO" },
+    @{ Command = "Get-NetComputer | Get-NetLoggedon | Select-Object UserName, ComputerName"; CommandName = "Get-NetLoggedon (Cached Credentials)" },
+    @{ Command = "Get-NetComputer | Get-NetSession | Select-Object UserName, ComputerName"; CommandName = "Get-NetSession (Active Sessions)" },
+    @{ Command = "Get-DomainUser -SPN | Select-Object name, description, objectsid, serviceprincipalname"; CommandName = "Get-DomainUser (Users with SPNs)"},
+    @{ Command = "Get-NetComputer | Get-NetShare"; CommandName = "Get-NetShare - All Computers"}
 )
-
 # Add optional commands if -Thorough flag is provided
 if ($thoroughFlag) {
     $commands += @(
@@ -74,7 +72,6 @@ if ($thoroughFlag) {
         @{ Command = "Find-DomainShare"; CommandName = "Find-DomainShare" }
     )
 }
-
 # Execute commands
 $totalCommands = $commands.Count
 $currentCommand = 1
@@ -85,8 +82,9 @@ echo " ___ ___ __(_)___/ /___  __(_)__ _    __"
 echo "/ _ '/ // / / __/  '_/ |/ / / -_) |/|/ /"
 echo "\_  /\___/_/\__/_/\_\|___/_/\__/|__v__/ "
 echo " /_/                                    "
+$resetcolor$yellowColor 
+echo "                           By @gustanini"
 $resetcolor
-
 Write-Host "Executing commands..."
 
 ForEach ($cmd in $commands) {
