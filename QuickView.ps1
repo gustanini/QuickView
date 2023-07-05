@@ -82,7 +82,8 @@ echo " ___ ___ __(_)___/ /___  __(_)__ _    __"
 echo "/ _ '/ // / / __/  '_/ |/ / / -_) |/|/ /"
 echo "\_  /\___/_/\__/_/\_\|___/_/\__/|__v__/ "
 echo " /_/                                    "
-$resetcolor$yellowColor 
+$resetcolor
+$yellowColor 
 echo "                           By @gustanini"
 $resetcolor
 Write-Host "Executing commands..."
