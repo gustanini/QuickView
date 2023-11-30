@@ -1,73 +1,61 @@
 # QuickView
 
-QuickView is an automated enumeration tool inspired by winPEAS. It provides a fast and comprehensive way to gather information about the system, users, groups, policies, computers, sessions, SPNs, and shares. The script leverages PowerShell commands and the Powerview.ps1 module for performing various queries.
+QuickViewAD is a PowerShell script designed to simplify and enhance Active Directory enumeration. It provides a streamlined approach to gather crucial information about users, computers, groups, domains, trusts, shares, and more within your Active Directory environment.
 
 ## Features
 
-- Automated enumeration of system information, users, groups, policies, computers, sessions, SPNs, and shares.
-- Blazing fast execution for quick enumeration.
-- Supports optional thorough mode for additional queries (affects execution time).
-- Color-coded output for easy readability.
-- Saves output to a file for future reference.
+- **User Enumeration:** Retrieves details about all users, users with Service Principal Names (SPNs), and admin users.
 
-### Commands Executed
+- **Computer Enumeration:** Gathers information about all computer names, accessible computers using ICMP, and domain controllers.
 
-- Get-NetDomain - Displays an overview of current Domain information.
-- Get-NetUser - Filtered display of available users within the Domain.
-- Get-NetGroup - Filtered display of available groups within the Domain.
-- Invoke-EnumerateLocalAdmin - Displays which users are local administrators and in which computers.
-- Net Accounts - Account policy information (password information).
-- Get-NetComputer - Displays domain joined machines.
-- Get-NetGPO - Displays Group Policy Objects.
-- Get-NetComputer | Get-NetLoggedon - Displays users with cached credentials (locally and remotely if user is privileged enough).
-- Get-NetComputer | Get-NetSession - Displays users with active sessions (locally and remotely if user is privileged enough).
+- **Group Enumeration:** Gathers details about group names and SIDs, admin groups, domain admins group members, and enterprise admins.
 
-Extra commands (use -thorough flag), these commands may or may not work, and they will usually impact execution time considerably:
+- **Domain Enumeration:** Gathers information about the current domain, including infrastructure details, linked group policy objects, child domains, and more.
 
-- Invoke-UserHunter - finds machines on the local domain where specified users are logged into, and checks if the current user has local admin access to found machines.
-- Find-LocalAdminAccess - finds machines on the domain that the current user has local admin access to
-- Find-DomainShare - Searches for computer shares on the domain.
+- **Trust Enumeration:** Gathers forest information, domains in the current forest, global catalogs, current domain trusts, and current forest trusts.
 
-For more information visit the official [powersploit documentation](https://powersploit.readthedocs.io/en/stable/Recon/README/), [powersploit recon documentation 2](https://powersploit.readthedocs.io/en/latest/Recon/Find-DomainShare/).
-
-## Prerequisites
-
-- Windows operating system
-- PowerShell version 3.0 or above
-- Imported PowerView.ps1 module
+- **Shares Enumeration:** Gathers shares across all computers within the current Active Directory domain.
 
 ## Usage
 
-1. Clone or download the PowerShell script.
-2. Ensure that the Powerview.ps1 module is available in the same directory as the script.
-3. Open a PowerShell terminal.
-4. Navigate to the directory where the script is located.
-5. Run the script using the following command:
+1. Ensure you have the Active Directory PowerShell module installed.
 
-```powershell
-.\EnumerationScript.ps1 [-Thorough] [-h | --help]
+2. Run the script in a PowerShell environment.
+
+3. Follow the on-screen prompts to choose the enumeration options (use `get-help` to view available functions).
+
+## Quick Start
+
+1. Clone this repository:
+
+```bash
+git clone https://github.com/gustanini/QuickView.git
 ```
 
-### Modes
+2. Navigate to the QuickView directory:
 
-The -Thorough flag can be used to enable additional queries (Find-LocalAdminAccess, Invoke-UserHunter, Find-DomainShare). Note that enabling thorough mode may increase execution time.
+```bash
+cd QuickView
+```
 
-The -h or --help flag can be used to display the help message, providing information about the usage and available optional arguments.
+3. Import the script:
 
-## Output
+```powershell
+Import-Module .\QuickViewAD.ps1
+```
 
-QuickView will generate an output file named output.txt in the same directory as the script.
-The output file will contain the results of the executed queries, each section labeled with the corresponding command name.
+4. Run all functions for quick enumeration (can also run individual functions, use `get-help` for more):
 
-The command names will be displayed in green, and the output of each command will be displayed in yellow for easy identification.
+```powershell
+Invoke-AllEnum
+```
 
-## Disclaimer
+## Contributing
 
-This script is intended for educational and informational purposes only. Use this script responsibly and with proper authorization.
+Contributions are welcome! If you have suggestions, improvements, or new features, feel free to open an issue or submit a pull request.
 
-I am not responsible for any misuse or damage caused by this script.
+## Follow Us
 
-## Credits
+[Hacker Hermanos](https://linktr.ee/hackerhermanos)
 
-This script utilizes the Powerview.ps1 module by Will Schroeder (@harmj0y).
-Powerview.ps1: https://github.com/PowerShellMafia/PowerSploit/blob/master/Recon/PowerView.ps1
+**Note**: This is by no means an exhaustive enumeration, you will also need to enumerate GPOs, OUs, ACLs. This script was made to run on new forests that you just compromised for achieving situational awareness.
